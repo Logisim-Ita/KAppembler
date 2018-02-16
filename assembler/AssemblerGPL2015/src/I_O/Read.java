@@ -14,7 +14,7 @@ public class Read {
 		try {
 
 			//br = new BufferedReader(new FileReader(FILENAME));
-			fr = new FileReader("C:\\\\Users\\\\s5067966h\\\\Desktop\\\\KappemblerPRJ\\\\KAppembler\\\\assembler\\\\instruction.txt");
+			fr = new FileReader("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
 			//fr = new FileReader("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\assembler\\instruction.txt");
 			br = new BufferedReader(fr);
 

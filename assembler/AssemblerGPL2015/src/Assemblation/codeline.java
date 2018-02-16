@@ -7,6 +7,8 @@ public class codeline {
 	public String SecondFactor="";
 	public String FirstModifier="";
 	public String SecondModifier="";
+	public boolean FirstIsNum;
+	public boolean SecondIsNum;
 	public int SecondNB;
 	public int FirstNB;
 	private String[] atemp;
@@ -38,9 +40,11 @@ public class codeline {
 		}
 		FirstModifier=GetModifier(FirstFactor,RegisterList);
 		SecondModifier=GetModifier(SecondFactor,RegisterList);
-		if(FirstModifier.contains("n"))FirstNB=GetNumber(FirstModifier);
-		if(SecondModifier.contains("n"))SecondNB=GetNumber(SecondModifier);
-		System.out.println(Key+" "+FirstModifier+" "+SecondModifier+" "+FirstNB+" "+SecondNB);
+		if(FirstModifier!="")FirstIsNum = !IsNaN(Integer.parseInt(FirstModifier));
+		if(SecondModifier!="")SecondIsNum = !IsNaN(Integer.parseInt(SecondModifier));
+		if(FirstIsNum)FirstNB=Integer.parseInt(FirstModifier);
+		if(SecondIsNum)SecondNB=Integer.parseInt(SecondModifier);
+		System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstNB+" "+SecondNB);
 	}
 	private String GetModifier(String Factor,String[] Reg) {
 		itemp=0;
@@ -62,5 +66,8 @@ public class codeline {
 	private int GetNumber(String mod) {
 			mod=mod.replace("n","");
 		return Integer.parseInt(mod);
+	}
+	private Boolean IsNaN(int val) {
+		return val!=val;
 	}
 }

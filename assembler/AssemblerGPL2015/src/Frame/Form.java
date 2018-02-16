@@ -35,7 +35,7 @@ public class Form {
 		p1.add(output);
 		p1.add(instr);
 		p1.add(submit);
-		instr.setText(r.readfilePass("C:\\Users\\s5067966h\\Desktop\\KappemblerPRJ\\KAppembler\\assembler\\instruction.txt"));
+		instr.setText(r.readfilePass("Z:\\\\KAppembler-master\\\\KAppembler\\\\assembler\\instruction.txt"));
 		//output.setText(r.readfilePass("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\assembler\\instruction.txt"));
 		f.add(p1);
 		f.setVisible(true);
