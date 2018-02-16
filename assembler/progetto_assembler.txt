@@ -1,0 +1,11 @@
+Assembler project
+
+Form contenenente Input e Output
+
+classe main per lanciare il tutto
+
+classe output per convertire da assembly a linguaggio macchina
+
+classe foutput per scrivere un file 
+
+il set di istruzioni è modificabile attraverso un file di testo (instruction.txt)
