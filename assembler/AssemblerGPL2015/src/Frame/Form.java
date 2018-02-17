@@ -21,7 +21,7 @@ public class Form {
 	JButton submit=new JButton("submit");
 	Listeners listener=new Listeners(input,output);
 	
-	public void visualizza(){
+	public void visualizza(String FileName){
 		f.setSize(700, 700);
 		JPanel p1=new JPanel();
 		input.setSize(500, 500);
@@ -35,8 +35,7 @@ public class Form {
 		p1.add(output);
 		p1.add(instr);
 		p1.add(submit);
-		instr.setText(r.readfilePass("Z:\\\\KAppembler-master\\\\KAppembler\\\\assembler\\instruction.txt"));
-		//output.setText(r.readfilePass("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\assembler\\instruction.txt"));
+		instr.setText(r.readfilePass(FileName));
 		f.add(p1);
 		f.setVisible(true);
 		

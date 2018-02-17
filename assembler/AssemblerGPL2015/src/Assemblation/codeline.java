@@ -11,6 +11,8 @@ public class codeline {
 	public boolean SecondIsNum;
 	public int SecondNB;
 	public int FirstNB;
+	public int SecondN;
+	public int FirstN;
 	private String[] atemp;
 	private String temp="";
 	public String[] RegisterList;
@@ -40,11 +42,17 @@ public class codeline {
 		}
 		FirstModifier=GetModifier(FirstFactor,RegisterList);
 		SecondModifier=GetModifier(SecondFactor,RegisterList);
-		if(FirstModifier!="")FirstIsNum = !IsNaN(Integer.parseInt(FirstModifier));
-		if(SecondModifier!="")SecondIsNum = !IsNaN(Integer.parseInt(SecondModifier));
-		if(FirstIsNum)FirstNB=Integer.parseInt(FirstModifier);
-		if(SecondIsNum)SecondNB=Integer.parseInt(SecondModifier);
-		System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstNB+" "+SecondNB);
+		FirstIsNum=IsNum(FirstModifier);
+		SecondIsNum=IsNum(SecondModifier);
+		if(FirstIsNum) {
+			FirstN=Integer.parseInt(FirstModifier);
+			FirstNB=GetNumberOfBytes(FirstN);
+		}
+		if(SecondIsNum) {
+			SecondN=Integer.parseInt(SecondModifier);
+			SecondNB=GetNumberOfBytes(SecondN);
+		}
+		System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+" "+FirstNB+" "+SecondN);
 	}
 	private String GetModifier(String Factor,String[] Reg) {
 		itemp=0;
@@ -63,11 +71,20 @@ public class codeline {
 		}
 		return "";
 	}
-	private int GetNumber(String mod) {
-			mod=mod.replace("n","");
-		return Integer.parseInt(mod);
-	}
 	private Boolean IsNaN(int val) {
 		return val!=val;
+	}
+	private int GetNumberOfBytes(int Num) {
+		int Bytes;
+		for(Bytes=1;Num>(Math.pow(2, 8*Bytes)-1);Bytes++);
+		return Bytes;
+	}
+	private Boolean IsNum(String Mod) {
+		try {
+			if(Mod!="")return !IsNaN(Integer.parseInt(Mod));
+			else return false;
+		}catch(NumberFormatException e) {
+			return false;
+		}
 	}
 }

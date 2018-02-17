@@ -11,8 +11,8 @@ public class Elaboration {
 	public ArrayList<instructions> inst= new ArrayList<instructions>();
 	String[] RegList;
 	public void setInstructions() {
-		String instructionSet=r.readfilePass("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
-		//String instructionSet=r.readfilePass("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\assembler\\instruction.txt");
+		//String instructionSet=r.readfilePass("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
+		String instructionSet=r.readfilePass("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\KAppembler\\assembler\\instruction.txt");
 		String[] atemp=instructionSet.split("___");
 		RegList= r.linedivision(atemp[0]);
 		String[] linesSet=r.linedivision(atemp[1]);

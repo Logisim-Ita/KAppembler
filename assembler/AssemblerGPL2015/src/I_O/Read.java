@@ -7,14 +7,13 @@ import java.io.Reader;
 
 
 public class Read {
-	public void readfile() {
+	public void readfile(String FileName) {
 		BufferedReader br = null;
 		FileReader fr = null;
 
 		try {
-
-			//br = new BufferedReader(new FileReader(FILENAME));
-			fr = new FileReader("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
+			fr = new FileReader(FileName);
+			//fr = new FileReader("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
 			//fr = new FileReader("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\assembler\\instruction.txt");
 			br = new BufferedReader(fr);
 
