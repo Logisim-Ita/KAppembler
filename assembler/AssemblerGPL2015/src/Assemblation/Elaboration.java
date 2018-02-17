@@ -2,6 +2,8 @@ package Assemblation;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Frame.Form;
 import I_O.Read;
 public class Elaboration {
@@ -23,40 +25,89 @@ public class Elaboration {
 	}
 	public String traduction(String input) {
 		ArrayList<codeline> code= new ArrayList<codeline>();
+		String temp="";
 		String trad="";
 		String[] atemp=input.split("\r\n");
 		for(int i=0;i<atemp.length;i++) {
 			code.add(new codeline(atemp[i],RegList));
 		}
 		for(int i=0;i<code.size();i++){
+			temp=trad;
 			for(int c=0;c<inst.size();c++) {
 				if(code.get(i).Key.equals(inst.get(c).Key)) {
-					trad+=inst.get(c).MachineCode+"\r\n";
+					if(code.get(i).FirstIsNum) {
+						if(code.get(i).FirstNB<=inst.get(c).FirstNB) {
+							if(code.get(i).SecondIsNum) {
+								if(code.get(i).SecondNB<=inst.get(c).SecondNB){
+									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
+								}
+							}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)) {
+								if(inst.get(c).SecondIsNum){
+									infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
+								}else
+									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN);
+							}
+						}
+					}else if(code.get(i).FirstFactor.equals(inst.get(c).FirstFactor)){
+						if(inst.get(c).FirstIsNum){
+							infoBox("You digited "+code.get(i).FirstFactor+" instead of a number","Attention please");
+						}else if(code.get(i).SecondIsNum) {
+							if(code.get(i).SecondNB<=inst.get(c).SecondNB){
+								trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
+							}
+						}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)) {
+							if(inst.get(c).SecondIsNum){
+								infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
+							}else 
+								trad+=inst.get(c).MachineCode+"\r\n";
+						}
+					}
+					//trad+=inst.get(c).MachineCode+"\r\n";
 				}
+			}
+			if(temp.equals(trad)) {
+				infoBox("No instuction found for line "+(i+1)+" please check your code","Attention please");
 			}
 		}
 		return trad;
 	}
-	public void getInsMC(int val) {
-		System.out.println("Machine Code "+(val+1)+" :"+ inst.get(val).MachineCode);
+	private String DeByte(int NB,int num){
+		String ByS=Integer.toBinaryString(num);
+		String res="";
+		for(int i=0;i<NB;i++) {
+			if(ByS.length()-8>=0) {
+				res+=ByS.substring(ByS.length()-8)+"\r\n";
+				ByS=ByS.substring(0,ByS.length()-8);
+			}
+			else {
+				for(int c=0;c<(8-ByS.length());c++) {
+					res+=0;
+				}
+				res+=ByS.substring(0)+"\r\n";
+			}
+		}
+		return res;
 	}
-	public void getInsSHC(int val) {
-		System.out.println("Human Code "+(val+1)+" :"+ inst.get(val).SemiHumanCode);
+	private String DeHex(int NB,int num){
+		String ByS=Integer.toHexString(num);
+		String res="";
+		for(int i=0;i<NB;i++) {
+			if(ByS.length()-2>=0) {
+				res+=ByS.substring(ByS.length()-2)+"\r\n";
+				ByS=ByS.substring(0,ByS.length()-2);
+			}
+			else {
+				for(int c=0;c<(2-ByS.length());c++) {
+					res+=0;
+				}
+				res+=ByS.substring(0)+"\r\n";
+			}
+		}
+		return res;
 	}
-	public void getInsFF(int val) {
-		System.out.println("First Factor "+(val+1)+" :"+ inst.get(val).FirstFactor);
-		System.out.println("First Factor Modifier "+(val+1)+" :"+ inst.get(val).FirstModifier);
-		if(inst.get(val).FirstModifier.contains("n")) 
-		System.out.println("Number Of Bytes "+(val+1)+" :"+ inst.get(val).FirstNB);
-	}
-	public void getInsSF(int val) {
-		System.out.println("Second Factor "+(val+1)+" :"+ inst.get(val).SecondFactor);
-		System.out.println("Second Factor Modifier "+(val+1)+" :"+ inst.get(val).SecondModifier);
-		if(inst.get(val).SecondModifier.contains("n")) 
-			System.out.println("Number Of Bytes "+(val+1)+" :"+ inst.get(val).SecondNB);
-	}
-	public void getInsKey(int val) {
-		System.out.println("Key "+(val+1)+" :"+ inst.get(val).Key);
-	}
-	
+	public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 }
+	

@@ -9,6 +9,8 @@ public class instructions {
 	public String SecondFactor="";
 	public String FirstModifier="";
 	public String SecondModifier="";
+	public Boolean FirstIsNum= false;
+	public Boolean SecondIsNum= false;
 	public int SecondNB;
 	public int FirstNB;
 	private String[] atemp;
@@ -36,8 +38,14 @@ public class instructions {
 		}
 		FirstModifier=GetModifier(FirstFactor,RegisterList);
 		SecondModifier=GetModifier(SecondFactor,RegisterList);
-		if(FirstModifier.contains("n"))FirstNB=GetNumber(FirstModifier);
-		if(SecondModifier.contains("n"))SecondNB=GetNumber(SecondModifier);
+		if(FirstModifier.contains("n")) {
+			FirstNB=GetNumber(FirstModifier);
+			FirstIsNum=true;
+		}
+		if(SecondModifier.contains("n")) {
+			SecondNB=GetNumber(SecondModifier);
+			SecondIsNum=true;
+		}
 	}
 	private String GetModifier(String Factor,String[] Reg) {
 		itemp=0;

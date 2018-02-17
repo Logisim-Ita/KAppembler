@@ -52,7 +52,7 @@ public class codeline {
 			SecondN=Integer.parseInt(SecondModifier);
 			SecondNB=GetNumberOfBytes(SecondN);
 		}
-		System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+" "+FirstNB+" "+SecondN);
+		//System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+" "+FirstNB+" "+SecondN);
 	}
 	private String GetModifier(String Factor,String[] Reg) {
 		itemp=0;
