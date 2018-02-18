@@ -23,11 +23,11 @@ public class codeline {
 	public codeline(String SHC,String[] RL) {
 		SemiHumanCode=SHC;
 		RegisterList=RL;
-		if(!SemiHumanCode.startsWith(" ")) {
+		if(!(SemiHumanCode.startsWith(" ")||SemiHumanCode.startsWith("\t"))) {
 			label=SemiHumanCode.substring(0,SemiHumanCode.indexOf(":"));
 			SemiHumanCode=SemiHumanCode.substring(SemiHumanCode.indexOf(":")+1);
 		}
-		while(SemiHumanCode.startsWith(" ")) {
+		while(SemiHumanCode.startsWith(" ") || SemiHumanCode.startsWith("\t")) {
 			SemiHumanCode=SemiHumanCode.substring(1);	
 		}
 		if(SemiHumanCode.contains(" ")){

@@ -8,8 +8,11 @@ import java.awt.Component;
 //import java.awt.Color;
 import java.awt.TextArea;
 import java.io.BufferedReader;
+import java.io.File;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 public class Form {
 	BufferedReader br = null;
@@ -19,8 +22,9 @@ public class Form {
 	TextArea output=new TextArea();
 	TextArea instr=new TextArea();
 	JButton submit=new JButton("submit");
+	JButton export=new JButton("export");
 	Listeners listener=new Listeners(input,output);
-	
+	ExportListener el=new ExportListener(output);
 	public void visualizza(String FileName){
 		f.setSize(700, 700);
 		JPanel p1=new JPanel();
@@ -31,10 +35,12 @@ public class Form {
 		output.setEditable(false);
 		instr.setEditable(false);
 		submit.addActionListener(listener);
+		export.addActionListener(el);
 		p1.add(input);
 		p1.add(output);
 		p1.add(instr);
 		p1.add(submit);
+		p1.add(export);
 		instr.setText(r.readfilePass(FileName));
 		f.add(p1);
 		f.setVisible(true);

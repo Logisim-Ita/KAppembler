@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Assemblation.Elaboration;
-import Main.main;
 
 public class Listeners implements ActionListener{
 	private TextArea input;
