@@ -19,14 +19,16 @@ public class Elaboration {
 		RegList= r.linedivision(atemp[0]);
 		String[] linesSet=r.linedivision(atemp[1]);
 		for(int i=1;i<linesSet.length;i++) {
-			atemp=linesSet[i].split("§");
-			inst.add(new instructions(atemp[0],atemp[1],RegList));
+			//atemp=linesSet[i].split("§");
+			inst.add(new instructions(linesSet[i].substring(0, linesSet[i].indexOf(" ")),linesSet[i].substring(linesSet[i].indexOf(" ")+1),RegList));
 		}
 	}
 	public String traduction(String input) {
 		ArrayList<codeline> code= new ArrayList<codeline>();
 		String temp="";
 		String trad="";
+		int tempFactorPos;
+		int WordsCounter=0;
 		String[] atemp=input.split("\r\n");
 		for(int i=0;i<atemp.length;i++) {
 			code.add(new codeline(atemp[i],RegList));
@@ -40,29 +42,71 @@ public class Elaboration {
 							if(code.get(i).SecondIsNum) {
 								if(code.get(i).SecondNB<=inst.get(c).SecondNB){
 									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
+									code.get(i).Position=WordsCounter;
+									WordsCounter+=1+code.get(i).FirstNB+code.get(i).SecondNB;
 								}
-							}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)) {
+							}else {
 								if(inst.get(c).SecondIsNum){
-									infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
-								}else
+									Boolean isLabel=false;
+									for(int l=0;l<code.size();l++){
+										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
+											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(1,code.get(l).Position);
+											code.get(i).Position=WordsCounter;
+											WordsCounter+=2+code.get(i).FirstNB;
+											isLabel=true;
+										}
+									}
+									if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
+								}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
 									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN);
+									code.get(i).Position=WordsCounter;
+									WordsCounter+=1+code.get(i).FirstNB;
+								}
 							}
 						}
-					}else if(code.get(i).FirstFactor.equals(inst.get(c).FirstFactor)){
+					}else {
 						if(inst.get(c).FirstIsNum){
-							infoBox("You digited "+code.get(i).FirstFactor+" instead of a number","Attention please");
-						}else if(code.get(i).SecondIsNum) {
-							if(code.get(i).SecondNB<=inst.get(c).SecondNB){
-								trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
+							Boolean isLabel=false;
+							for(int l=0;l<code.size();l++){
+								if(code.get(i).FirstFactor.equals(code.get(l).label)) {
+									//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,code.get(l).Position);
+									//code.get(i).Position=WordsCounter;
+									//WordsCounter+=2;
+									isLabel=true;
+									tempFactorPos=code.get(l).Position;
+								}
 							}
-						}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)) {
-							if(inst.get(c).SecondIsNum){
-								infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
-							}else 
-								trad+=inst.get(c).MachineCode+"\r\n";
+							if(isLabel) {
+								//TODO
+							}
+							else infoBox("You digited "+code.get(i).FirstFactor+" instead of a number","Attention please");
+						}else if(code.get(i).FirstFactor.equals(inst.get(c).FirstFactor)) {
+							if(code.get(i).SecondIsNum) {
+								if(code.get(i).SecondNB<=inst.get(c).SecondNB){
+									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
+									code.get(i).Position=WordsCounter;
+									WordsCounter+=1+code.get(i).SecondNB;
+								}
+							}else {
+								if(inst.get(c).SecondIsNum){
+									Boolean isLabel=false;
+									for(int l=0;l<code.size();l++){
+										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
+											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(1,code.get(l).Position);
+											code.get(i).Position=WordsCounter;
+											WordsCounter+=2+code.get(i).FirstNB;
+											isLabel=true;
+										}
+									}
+									if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
+								}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
+									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN);
+									code.get(i).Position=WordsCounter;
+									WordsCounter+=1+code.get(i).FirstNB;
+								}
+							}
 						}
 					}
-					//trad+=inst.get(c).MachineCode+"\r\n";
 				}
 			}
 			if(temp.equals(trad)) {

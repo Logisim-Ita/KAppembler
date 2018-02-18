@@ -7,12 +7,14 @@ public class codeline {
 	public String SecondFactor="";
 	public String FirstModifier="";
 	public String SecondModifier="";
+	public String label="";
 	public boolean FirstIsNum;
 	public boolean SecondIsNum;
 	public int SecondNB;
 	public int FirstNB;
 	public int SecondN;
 	public int FirstN;
+	public int Position;
 	private String[] atemp;
 	private String temp="";
 	public String[] RegisterList;
@@ -21,6 +23,13 @@ public class codeline {
 	public codeline(String SHC,String[] RL) {
 		SemiHumanCode=SHC;
 		RegisterList=RL;
+		if(!SemiHumanCode.startsWith(" ")) {
+			label=SemiHumanCode.substring(0,SemiHumanCode.indexOf(":"));
+			SemiHumanCode=SemiHumanCode.substring(SemiHumanCode.indexOf(":")+1);
+		}
+		while(SemiHumanCode.startsWith(" ")) {
+			SemiHumanCode=SemiHumanCode.substring(1);	
+		}
 		if(SemiHumanCode.contains(" ")){
 			if(!SemiHumanCode.endsWith(" ")) {
 				atemp=SemiHumanCode.split(" ");

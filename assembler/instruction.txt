@@ -3,12 +3,12 @@ B
 C
 D
 ___
-00§HALT
-01§JP
-02§NOICE A
-03§NETI B,n2
-04§JP B,n1
-05§LD A,n3
-0A§LD (A),n1
-FF§LF n2,n3
+00 HALT
+01 JP
+02 NOICE A
+03 NETI B,n2
+04 JP B,n1
+05 LD A,n3
+0a LD (A),n1
+ff LF n2,n3
 ___

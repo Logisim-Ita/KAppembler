@@ -1,11 +1,10 @@
 Assembler project
 
-Form contenenente Input e Output
-
-classe main per lanciare il tutto
-
-classe output per convertire da assembly a linguaggio macchina
-
-classe foutput per scrivere un file 
-
-il set di istruzioni è modificabile attraverso un file di testo (instruction.txt)
+Function :
+Read a file Instruction for obtain IstructionSet and Registers
+Put them in a JtexArea(instructions)
+The user can write code in the first JtextArea (input) and click "submit"
+When it appens The computer compare code and instruction for get the Machine code
+And write it in the Output JTextArea
+TODO
+Labels,Auto-Update,Writing in a file the output.
