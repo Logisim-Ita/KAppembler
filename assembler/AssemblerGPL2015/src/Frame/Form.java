@@ -3,18 +3,21 @@ package Frame;
 import javax.swing.JPanel;
 
 import I_O.Read;
+import Main.main;
 
 import java.awt.Component;
 //import java.awt.Color;
 import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.File;
+import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 public class Form {
+	
 	BufferedReader br = null;
 	JFrame f = new JFrame("Frame");
 	Read r=new Read();
@@ -29,7 +32,7 @@ public class Form {
 		f.setSize(700, 700);
 		JPanel p1=new JPanel();
 		input.setSize(500, 500);
-		input.setText("HALT \r\nJP");
+		input.setText("\tHALT");
 		output.setSize(400, 500);
 		instr.setSize(400, 500);
 		output.setEditable(false);

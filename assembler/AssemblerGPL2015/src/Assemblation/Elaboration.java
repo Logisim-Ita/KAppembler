@@ -1,6 +1,7 @@
 package Assemblation;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -9,15 +10,25 @@ import javax.swing.JOptionPane;
 
 import Frame.Form;
 import I_O.Read;
+import Main.main;
 public class Elaboration {
 	Form obj=new Form();
 	Read r=new Read();
 	instructions in;
 	public ArrayList<instructions> inst= new ArrayList<instructions>();
 	String[] RegList;
+	
 	public void setInstructions() {
-		//String instructionSet=r.readfilePass("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
-		String instructionSet=r.readfilePass("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\KAppembler\\assembler\\instruction.txt");
+		String s="";
+		try {
+			 s = main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		s=s.substring(0,s.lastIndexOf("/"));
+		String FileName=s+"\\instruction.txt";
+		String instructionSet=r.readfilePass(FileName);
 		String[] atemp=instructionSet.split("___");
 		RegList= r.linedivision(atemp[0]);
 		String[] linesSet=r.linedivision(atemp[1]);

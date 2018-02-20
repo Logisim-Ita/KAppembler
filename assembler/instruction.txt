@@ -24,7 +24,7 @@ ___
 90 SUB B
 91 SUB C
 C2 JP NZ,n1
-C3 JP addr
+C3 JP n1
 C6 ADD n1
 CA JP Z,n1
 D3 OUT A
