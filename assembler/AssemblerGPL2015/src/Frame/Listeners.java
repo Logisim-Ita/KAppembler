@@ -18,4 +18,5 @@ public class Listeners implements ActionListener{
 		el.setInstructions();
         output.setText(el.traduction(input.getText()));
 	}
+	
 }

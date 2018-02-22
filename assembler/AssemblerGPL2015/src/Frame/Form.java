@@ -1,6 +1,7 @@
 package Frame;
 
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import I_O.Read;
 import Main.main;
@@ -28,7 +29,9 @@ public class Form {
 	JButton export=new JButton("export");
 	Listeners listener=new Listeners(input,output);
 	ExportListener el=new ExportListener(output);
+	
 	public void visualizza(String FileName){
+		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		f.setSize(700, 700);
 		JPanel p1=new JPanel();
 		input.setSize(500, 500);

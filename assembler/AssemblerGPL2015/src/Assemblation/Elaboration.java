@@ -61,16 +61,16 @@ public class Elaboration {
 								}
 							}else {
 								if(inst.get(c).SecondIsNum){
-									Boolean isLabel=false;
+									//Boolean isLabel=false;
 									for(int l=0;l<code.size();l++){
 										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(1,code.get(l).Position);
 											code.get(i).Position=WordsCounter;
 											WordsCounter+=2+code.get(i).FirstNB;
-											isLabel=true;
+											//isLabel=true;
 										}
 									}
-									if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
+									//if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
 								}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
 									trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN);
 									code.get(i).Position=WordsCounter;
@@ -96,16 +96,16 @@ public class Elaboration {
 									}
 								}else {
 									if(inst.get(c).SecondIsNum){
-										Boolean isLabell=false;
+										//Boolean isLabell=false;
 										for(int l=0;l<code.size();l++){
 											if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 												trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos)+DeHex(1,code.get(l).Position);
 												code.get(i).Position=WordsCounter;
 												WordsCounter+=3;
-												isLabell=true;
+												//isLabell=true;
 											}
 										}
-										if(!isLabell)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
+										//if(!isLabell)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
 									}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
 										trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos);
 										code.get(i).Position=WordsCounter;

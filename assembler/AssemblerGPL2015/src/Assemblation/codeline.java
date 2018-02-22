@@ -23,6 +23,8 @@ public class codeline {
 	public codeline(String SHC,String[] RL) {
 		SemiHumanCode=SHC;
 		RegisterList=RL;
+		if(SemiHumanCode.contains(";"))
+			SemiHumanCode=SemiHumanCode.substring(0,SemiHumanCode.indexOf(";"));
 		if(!(SemiHumanCode.startsWith(" ")||SemiHumanCode.startsWith("\t"))) {
 			label=SemiHumanCode.substring(0,SemiHumanCode.indexOf(":"));
 			SemiHumanCode=SemiHumanCode.substring(SemiHumanCode.indexOf(":")+1);
@@ -30,15 +32,13 @@ public class codeline {
 		while(SemiHumanCode.startsWith(" ") || SemiHumanCode.startsWith("\t")) {
 			SemiHumanCode=SemiHumanCode.substring(1);	
 		}
+		while(SemiHumanCode.endsWith(" ")) {
+			SemiHumanCode=SemiHumanCode.substring(0,SemiHumanCode.length()-1);
+		}
 		if(SemiHumanCode.contains(" ")){
-			if(!SemiHumanCode.endsWith(" ")) {
 				atemp=SemiHumanCode.split(" ");
 				Key=atemp[0];
 				temp=atemp[1];
-			}else {
-				atemp=SemiHumanCode.split(" ");
-				Key=atemp[0];
-			}
 		}else {
 			Key=SemiHumanCode;
 		}
