@@ -113,7 +113,6 @@ public class Elaboration {
 									}
 								}
 							}
-							else infoBox("You digited "+code.get(i).FirstFactor+" instead of a number","Attention please");
 						}else if(code.get(i).FirstFactor.equals(inst.get(c).FirstFactor)) {
 							if(code.get(i).SecondIsNum) {
 								if(code.get(i).SecondNB<=inst.get(c).SecondNB){
@@ -132,7 +131,6 @@ public class Elaboration {
 											isLabel=true;
 										}
 									}
-									if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
 								}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
 									trad+=inst.get(c).MachineCode+"\r\n";
 									code.get(i).Position=WordsCounter;
