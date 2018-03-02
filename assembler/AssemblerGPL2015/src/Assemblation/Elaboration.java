@@ -141,7 +141,7 @@ public class Elaboration {
 					}
 				}
 			}
-			if(temp.equals(trad)) {
+			if(temp.equals(trad) && !code.get(i).Key.equals("")) {
 				infoBox("No instuction found for line "+(i+1)+" please check your code","Attention please");
 			}
 		}
