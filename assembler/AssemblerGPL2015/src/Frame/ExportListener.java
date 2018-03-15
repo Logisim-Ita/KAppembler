@@ -40,7 +40,7 @@ public class ExportListener implements ActionListener{
 		}
 	}
 	public void writeFile(File dest,String text) throws IOException{
-		    FileWriter fileWriter = new FileWriter(dest);
+		    FileWriter fileWriter = new FileWriter(dest+".b18");
 		    PrintWriter printWriter = new PrintWriter(fileWriter);
 		    //printWriter.print("Some String");
 		    printWriter.printf(text);
