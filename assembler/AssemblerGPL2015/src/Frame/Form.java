@@ -71,6 +71,7 @@ public class Form {
 		instr.setEditable(false);
 		submit.addActionListener(listener);
 		export.addActionListener(el);
+		save.addActionListener(sl);
 		IO.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "I/O Panel"));
 		IO.add(input,constraints);
 		constraints.gridy = 10;
@@ -79,6 +80,8 @@ public class Form {
 		Buttons.add(submit,Bcon);
 		Bcon.gridy = 1;
 		Buttons.add(export,Bcon);
+		Bcon.gridy = 2;
+		Buttons.add(save,Bcon);
 		p1.add(Buttons);
 		Ins.add(in,Icon);
 		Icon.gridy=1;

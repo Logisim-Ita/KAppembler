@@ -54,10 +54,20 @@ public class codeline {
 			FirstIsNum = IsNum(FirstModifier,ModifierList);
 			SecondIsNum = IsNum(SecondModifier,ModifierList);
 			if (FirstIsNum) {
+				for(int i=0;i<ML.length;i++){
+					if(FirstModifier.contains(ML[i])){
+						FirstModifier=FirstModifier.replace(ML[i],"");
+					}
+				}
 				FirstN = Integer.parseInt(FirstModifier);
 				FirstNB = GetNumberOfBytes(FirstN);
 			}
 			if (SecondIsNum) {
+				for(int i=0;i<ML.length;i++){
+					if(SecondModifier.contains(ML[i])){
+						SecondModifier=SecondModifier.replace(ML[i],"");
+					}
+				}
 				SecondN = Integer.parseInt(SecondModifier);
 				SecondNB = GetNumberOfBytes(SecondN);
 			}

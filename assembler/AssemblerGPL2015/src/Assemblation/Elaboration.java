@@ -227,7 +227,6 @@ public class Elaboration {
 		return trad;
 	}
 	private String DeByte(int NB,int num){
-		//TODO
 		String ByS=Integer.toBinaryString(num);
 		String res="";
 		for(int i=0;i<NB;i++) {
@@ -245,7 +244,6 @@ public class Elaboration {
 		return res;
 	}
 	private String DeHex(int NB,int num){
-		//TODO
 		String ByS=Integer.toHexString(num);
 		String res="";
 		for(int i=0;i<NB;i++) {
