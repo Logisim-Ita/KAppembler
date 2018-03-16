@@ -17,6 +17,7 @@ public class Elaboration {
 	instructions in;
 	public ArrayList<instructions> inst= new ArrayList<instructions>();
 	String[] RegList;
+	String[] ModList;
 	
 	public void setInstructions() {
 		String s="";
@@ -31,10 +32,11 @@ public class Elaboration {
 		String instructionSet=r.readfilePass(FileName);
 		String[] atemp=instructionSet.split("___");
 		RegList= r.linedivision(atemp[0]);
-		String[] linesSet=r.linedivision(atemp[1]);
+		ModList= r.linedivision(atemp[1]);
+		String[] linesSet=r.linedivision(atemp[2]);
 		for(int i=1;i<linesSet.length;i++) {
 			//atemp=linesSet[i].split("§");
-			inst.add(new instructions(linesSet[i].substring(0, linesSet[i].indexOf(" ")),linesSet[i].substring(linesSet[i].indexOf(" ")+1),RegList));
+			inst.add(new instructions(linesSet[i].substring(0, linesSet[i].indexOf(" ")),linesSet[i].substring(linesSet[i].indexOf(" ")+1),RegList,ModList));
 		}
 	}
 	public String traduction(String input) {
@@ -45,7 +47,7 @@ public class Elaboration {
 		int WordsCounter=0;
 		String[] atemp=input.split("\r\n");
 		for(int i=0;i<atemp.length;i++) {
-			code.add(new codeline(atemp[i],RegList));
+			code.add(new codeline(atemp[i],RegList,ModList));
 		}
 		for(int i=0;i<code.size();i++){
 			temp=trad;
@@ -225,6 +227,7 @@ public class Elaboration {
 		return trad;
 	}
 	private String DeByte(int NB,int num){
+		//TODO
 		String ByS=Integer.toBinaryString(num);
 		String res="";
 		for(int i=0;i<NB;i++) {
@@ -242,6 +245,7 @@ public class Elaboration {
 		return res;
 	}
 	private String DeHex(int NB,int num){
+		//TODO
 		String ByS=Integer.toHexString(num);
 		String res="";
 		for(int i=0;i<NB;i++) {

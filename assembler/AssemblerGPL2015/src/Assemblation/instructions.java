@@ -16,12 +16,14 @@ public class instructions {
 	private String[] atemp;
 	private String temp="";
 	public String[] RegisterList;
+	public String[] ModifierList;
 	private int i;
 	private int itemp;
-	public instructions(String MC,String SHC,String[] RL) {
+	public instructions(String MC,String SHC,String[] RL,String[] ML) {
 		MachineCode=MC;
 		SemiHumanCode=SHC;
 		RegisterList=RL;
+		ModifierList=ML;
 		if(SemiHumanCode.contains(" ")){
 			atemp=SemiHumanCode.split(" ");
 			Key=atemp[0];
@@ -39,11 +41,11 @@ public class instructions {
 		FirstModifier=GetModifier(FirstFactor,RegisterList);
 		SecondModifier=GetModifier(SecondFactor,RegisterList);
 		if(FirstModifier.contains("n")) {
-			FirstNB=GetNumber(FirstModifier);
+			FirstNB=GetNumber(FirstModifier,ModifierList);
 			FirstIsNum=true;
 		}
 		if(SecondModifier.contains("n")) {
-			SecondNB=GetNumber(SecondModifier);
+			SecondNB=GetNumber(SecondModifier,ModifierList);
 			SecondIsNum=true;
 		}
 	}
@@ -64,8 +66,13 @@ public class instructions {
 		}
 		return "";
 	}
-	private int GetNumber(String mod) {
-			mod=mod.replace("n","");
+	private int GetNumber(String mod,String[] mods) {
+		mod=mod.replace("n","");
+		for(int i=0;i<mods.length;i++){
+			if(mod.contains(mods[i])){
+				mod=mod.replace(mods[i],"");
+			}
+		}
 		return Integer.parseInt(mod);
 	}
 }

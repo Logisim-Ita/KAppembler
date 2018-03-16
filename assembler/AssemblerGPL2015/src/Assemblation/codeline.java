@@ -18,12 +18,14 @@ public class codeline {
 	private String[] atemp;
 	private String temp = "";
 	public String[] RegisterList;
+	public String[] ModifierList;
 	private int i;
 	private int itemp;
 
-	public codeline(String SHC, String[] RL) {
+	public codeline(String SHC, String[] RL,String[] ML) {
 		SemiHumanCode = SHC;
 		RegisterList = RL;
+		ModifierList=ML;
 		if (SemiHumanCode.contains(";"))
 			SemiHumanCode = SemiHumanCode.substring(0, SemiHumanCode.indexOf(";"));
 		if (!SemiHumanCode.equals("")) {
@@ -49,8 +51,8 @@ public class codeline {
 			SecondFactor=StringCleaning(SecondFactor);
 			FirstModifier = GetModifier(FirstFactor, RegisterList);
 			SecondModifier = GetModifier(SecondFactor, RegisterList);
-			FirstIsNum = IsNum(FirstModifier);
-			SecondIsNum = IsNum(SecondModifier);
+			FirstIsNum = IsNum(FirstModifier,ModifierList);
+			SecondIsNum = IsNum(SecondModifier,ModifierList);
 			if (FirstIsNum) {
 				FirstN = Integer.parseInt(FirstModifier);
 				FirstNB = GetNumberOfBytes(FirstN);
@@ -93,7 +95,12 @@ public class codeline {
 		return Bytes;
 	}
 
-	private Boolean IsNum(String Mod) {
+	private Boolean IsNum(String Mod,String[] ML) {
+		for(int i=0;i<ML.length;i++){
+			if(Mod.contains(ML[i])){
+				Mod=Mod.replace(ML[i],"");
+			}
+		}
 		try {
 			if (Mod != "")
 				return !IsNaN(Integer.parseInt(Mod));

@@ -36,4 +36,5 @@ F2 JP P,n1
 F6 OR n1
 FA JP M,n1
 FE CP n1
+FF OUT (n),A
 ___

@@ -16,6 +16,7 @@ public class main {
 		}
 		s=s.substring(0,s.lastIndexOf("/"));
 		String FileName=s+"\\instruction.txt";
+		System.out.println(FileName);;
 		Form obj=new Form();
 		Read r=new Read();
 		r.readfile(FileName);
