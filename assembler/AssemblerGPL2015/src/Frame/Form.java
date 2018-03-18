@@ -33,10 +33,12 @@ public class Form {
 	JButton submit=new JButton("submit");
 	JButton export=new JButton("export");
 	JButton save=new JButton("Save Assembly");
+	JButton imp=new JButton("Import Assembly");
 	Listeners listener=new Listeners(input,output);
 	Label in=new Label("instructions:");
 	ExportListener el=new ExportListener(output,0);
 	ExportListener sl=new ExportListener(input,1);
+	importListener il=new importListener(input);
 	BorderLayout b=new BorderLayout();
 	GridBagLayout g=new GridBagLayout();
 	
@@ -72,6 +74,7 @@ public class Form {
 		submit.addActionListener(listener);
 		export.addActionListener(el);
 		save.addActionListener(sl);
+		imp.addActionListener(il);
 		IO.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "I/O Panel"));
 		IO.add(input,constraints);
 		constraints.gridy = 10;
@@ -82,6 +85,8 @@ public class Form {
 		Buttons.add(export,Bcon);
 		Bcon.gridy = 2;
 		Buttons.add(save,Bcon);
+		Bcon.gridy = 3;
+		Buttons.add(imp,Bcon);
 		p1.add(Buttons);
 		Ins.add(in,Icon);
 		Icon.gridy=1;

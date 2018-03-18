@@ -58,7 +58,7 @@ public class Read {
 			String sCurrentLine;
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				s=s+sCurrentLine+"\n";
+				s=s+sCurrentLine+"\r\n";
 			}
 
 		} catch (IOException e) {
@@ -87,7 +87,7 @@ public class Read {
 	public String[] linedivision(String text) {
 		String[] lines = null;
 		if(text!=null)
-		lines=text.split("\n");
+		lines=text.split("\r\n");
 		return lines; 
 	}
 }
