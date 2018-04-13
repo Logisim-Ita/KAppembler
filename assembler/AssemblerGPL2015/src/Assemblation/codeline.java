@@ -1,5 +1,7 @@
 package Assemblation;
 
+import java.util.ArrayList;
+
 public class codeline {
 	public String SemiHumanCode;
 	public String Key = "";
@@ -19,6 +21,7 @@ public class codeline {
 	private String temp = "";
 	public String[] RegisterList;
 	public String[] ModifierList;
+	public ArrayList<String> ContainedMod;
 	private int i;
 	private int itemp;
 
@@ -26,12 +29,22 @@ public class codeline {
 		SemiHumanCode = SHC;
 		RegisterList = RL;
 		ModifierList=ML;
+		ContainedMod=new ArrayList<String>();
+		for(i=0;i<ML.length;i++) {
+			if(SemiHumanCode.contains(ML[i])) 
+				ContainedMod.add(ML[i]);
+		}
 		if (SemiHumanCode.contains(";"))
 			SemiHumanCode = SemiHumanCode.substring(0, SemiHumanCode.indexOf(";"));
 		if (!SemiHumanCode.equals("")) {
 			if (!(SemiHumanCode.startsWith(" ") || SemiHumanCode.startsWith("\t"))) {
-				label = SemiHumanCode.substring(0, SemiHumanCode.indexOf(":"));
-				SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf(":") + 1);
+				if(SemiHumanCode.contains(":")){
+					label = SemiHumanCode.substring(0, SemiHumanCode.indexOf(":"));
+					SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf(":") + 1);
+				}else {
+					//TODO
+					//erroreh
+				}
 			}
 			SemiHumanCode=StringCleaning(SemiHumanCode);
 			if (SemiHumanCode.contains(" ")) {
@@ -59,7 +72,11 @@ public class codeline {
 						FirstModifier=FirstModifier.replace(ML[i],"");
 					}
 				}
-				FirstN = Integer.parseInt(FirstModifier);
+				if(FirstModifier.startsWith("0x")) {
+					FirstModifier=FirstModifier.replace("0x","");
+					FirstN=HexToDecimal(FirstModifier);
+				}else
+					FirstN = Integer.parseInt(FirstModifier);
 				FirstNB = GetNumberOfBytes(FirstN);
 			}
 			if (SecondIsNum) {
@@ -68,15 +85,21 @@ public class codeline {
 						SecondModifier=SecondModifier.replace(ML[i],"");
 					}
 				}
-				SecondN = Integer.parseInt(SecondModifier);
+				if(SecondModifier.startsWith("0x")) {
+					SecondModifier=SecondModifier.replace("0x","");
+					SecondN=HexToDecimal(SecondModifier);
+				}else
+					SecondN = Integer.parseInt(SecondModifier);
 				SecondNB = GetNumberOfBytes(SecondN);
 			}
+			
 		}
 		// System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+"
 		// "+FirstNB+" "+SecondN);
 	}
 
 	private String GetModifier(String Factor, String[] Reg) {
+		if(Factor.contains("0x"))return Factor;
 		itemp = 0;
 		for (i = 0; i < Reg.length; i++) {
 			if (Factor == Reg[i]) {
@@ -104,13 +127,40 @@ public class codeline {
 			;
 		return Bytes;
 	}
-
+	private int HexToDecimal(String s) {
+		int n=0;
+		int e=0;
+		while(s.length()!=0) {
+			n+=Dec(s.substring(s.length()-1))*Math.pow(16, e);
+			e++;
+			s=s.substring(0,s.length()-1);
+		}
+		return n;
+	}
+	private int Dec(String s) {
+		int n=0;
+		switch(s) {
+			case "A":{n=10;break;}
+			case "B":{n=11;break;}
+			case "C":{n=12;break;}
+			case "D":{n=13;break;}
+			case "E":{n=14;break;}
+			case "F":{n=15;break;}
+			default: n=Integer.parseInt(s);
+		}
+		return n;
+	}
 	private Boolean IsNum(String Mod,String[] ML) {
 		for(int i=0;i<ML.length;i++){
 			if(Mod.contains(ML[i])){
 				Mod=Mod.replace(ML[i],"");
 			}
 		}
+		if(Mod.startsWith("0x")) {
+			Mod=Mod.replace("0x","");
+			Mod=Integer.toString(HexToDecimal(Mod));
+		}
+		
 		try {
 			if (Mod != "")
 				return !IsNaN(Integer.parseInt(Mod));

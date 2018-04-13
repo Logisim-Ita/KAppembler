@@ -1,21 +1,14 @@
 package Frame;
 
 import javax.swing.JPanel;
-import javax.swing.ProgressMonitor;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import I_O.Read;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Label;
-//import java.awt.Color;
 import java.awt.TextArea;
 import java.io.BufferedReader;
 import javax.swing.JFrame;

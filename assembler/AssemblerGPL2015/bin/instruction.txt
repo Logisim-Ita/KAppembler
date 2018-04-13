@@ -15,6 +15,7 @@ ___
 3C INC A
 3D DEC A
 3E LD A,n1
+3F LD A,(n1)
 41 LD B,C
 47 LD B,A
 48 LD C,B

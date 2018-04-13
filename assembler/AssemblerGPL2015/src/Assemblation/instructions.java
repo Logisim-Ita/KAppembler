@@ -1,5 +1,6 @@
 package Assemblation;
 
+import java.util.ArrayList;
 
 public class instructions {
 	public String MachineCode;
@@ -11,6 +12,7 @@ public class instructions {
 	public String SecondModifier="";
 	public Boolean FirstIsNum= false;
 	public Boolean SecondIsNum= false;
+	public ArrayList<String> ContainedMod;
 	public int SecondNB;
 	public int FirstNB;
 	private String[] atemp;
@@ -24,6 +26,11 @@ public class instructions {
 		SemiHumanCode=SHC;
 		RegisterList=RL;
 		ModifierList=ML;
+		ContainedMod = new ArrayList<String>();
+		for(i=0;i<ML.length;i++) {
+			if(SemiHumanCode.contains(ML[i]))
+				ContainedMod.add(ML[i]);
+		}
 		if(SemiHumanCode.contains(" ")){
 			atemp=SemiHumanCode.split(" ");
 			Key=atemp[0];

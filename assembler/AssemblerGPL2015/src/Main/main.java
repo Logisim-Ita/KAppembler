@@ -1,13 +1,11 @@
 package Main;
 
-
-
 import java.net.URISyntaxException;
 import Frame.Form;
 import I_O.Read;
 
 public class main {
-	static public void main(String[] args) {
+	public static void main(String[] args) {
 		String s="";
 		try {
 			 s = main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();

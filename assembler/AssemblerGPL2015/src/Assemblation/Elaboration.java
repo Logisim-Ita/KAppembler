@@ -1,11 +1,7 @@
 package Assemblation;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Frame.Form;
@@ -53,7 +49,7 @@ public class Elaboration {
 			temp=trad;
 			code.get(i).Position=WordsCounter;
 			for(int c=0;c<inst.size();c++) {
-				if(code.get(i).Key.equals(inst.get(c).Key)) {
+				if(code.get(i).Key.equals(inst.get(c).Key) && code.get(i).ContainedMod.equals(inst.get(c).ContainedMod)) {
 					if(code.get(i).FirstIsNum) {
 						if(code.get(i).FirstNB<=inst.get(c).FirstNB) {
 							if(code.get(i).SecondIsNum) {
@@ -147,7 +143,7 @@ public class Elaboration {
 		for(int i=0;i<code.size();i++){
 			temp=trad;
 			for(int c=0;c<inst.size();c++) {
-				if(code.get(i).Key.equals(inst.get(c).Key)) {
+				if(code.get(i).Key.equals(inst.get(c).Key) && code.get(i).ContainedMod.equals(inst.get(c).ContainedMod)) {
 					if(code.get(i).FirstIsNum) {
 						if(code.get(i).FirstNB<=inst.get(c).FirstNB) {
 							if(code.get(i).SecondIsNum) {
@@ -226,23 +222,7 @@ public class Elaboration {
 		}
 		return trad;
 	}
-	private String DeByte(int NB,int num){
-		String ByS=Integer.toBinaryString(num);
-		String res="";
-		for(int i=0;i<NB;i++) {
-			if(ByS.length()-8>=0) {
-				res+=ByS.substring(ByS.length()-8)+"\r\n";
-				ByS=ByS.substring(0,ByS.length()-8);
-			}
-			else {
-				for(int c=0;c<(8-ByS.length());c++) {
-					res+=0;
-				}
-				res+=ByS.substring(0)+"\r\n";
-			}
-		}
-		return res;
-	}
+	
 	private String DeHex(int NB,int num){
 		String ByS=Integer.toHexString(num);
 		String res="";
