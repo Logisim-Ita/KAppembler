@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Frame.Form;
+import I_O.OutError;
 import I_O.Read;
 import Main.main;
 public class Elaboration {
 	Form obj=new Form();
 	Read r=new Read();
+	OutError er=new OutError();
 	instructions in;
 	public ArrayList<instructions> inst= new ArrayList<instructions>();
 	String[] RegList;
@@ -217,7 +219,7 @@ public class Elaboration {
 				}
 			}
 			if(temp.equals(trad) && !code.get(i).Key.equals("")) {
-				infoBox("No instuction found for line "+(i+1)+" please check your code","Attention please");
+				er.printError("No instuction found for line "+(i+1)+" please check your code","Attention please");
 			}
 		}
 		return trad;
@@ -228,21 +230,20 @@ public class Elaboration {
 		String res="";
 		for(int i=0;i<NB;i++) {
 			if(ByS.length()-2>=0) {
-				res+=ByS.substring(ByS.length()-2)+"\r\n";
+				res+=ByS.substring(ByS.length()-2);
 				ByS=ByS.substring(0,ByS.length()-2);
 			}
 			else {
 				for(int c=0;c<(2-ByS.length());c++) {
 					res+=0;
 				}
-				res+=ByS.substring(0)+"\r\n";
+				res+=ByS.substring(0);
 			}
 		}
+		res=res.toUpperCase();
+		res+="\r\n";
 		return res;
 	}
-	public static void infoBox(String infoMessage, String titleBar)
-    {
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
-    }
+	
 }
 	

@@ -2,6 +2,8 @@ package Assemblation;
 
 import java.util.ArrayList;
 
+import I_O.OutError;
+
 public class codeline {
 	public String SemiHumanCode;
 	public String Key = "";
@@ -12,6 +14,7 @@ public class codeline {
 	public String label = "";
 	public boolean FirstIsNum;
 	public boolean SecondIsNum;
+	public boolean HexError;
 	public int SecondNB;
 	public int FirstNB;
 	public int SecondN;
@@ -24,7 +27,7 @@ public class codeline {
 	public ArrayList<String> ContainedMod;
 	private int i;
 	private int itemp;
-
+	private OutError er=new OutError();
 	public codeline(String SHC, String[] RL,String[] ML) {
 		SemiHumanCode = SHC;
 		RegisterList = RL;
@@ -42,8 +45,7 @@ public class codeline {
 					label = SemiHumanCode.substring(0, SemiHumanCode.indexOf(":"));
 					SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf(":") + 1);
 				}else {
-					//TODO
-					//erroreh
+					er.printError("unvalid label in label position", "Label error");
 				}
 			}
 			SemiHumanCode=StringCleaning(SemiHumanCode);
@@ -94,6 +96,9 @@ public class codeline {
 			}
 			
 		}
+		if(HexError) {
+			er.printError("unvalid Hex number insered, please check your code", "Hex error");
+		}
 		// System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+"
 		// "+FirstNB+" "+SecondN);
 	}
@@ -138,17 +143,23 @@ public class codeline {
 		return n;
 	}
 	private int Dec(String s) {
-		int n=0;
+		s=s.toUpperCase();
 		switch(s) {
-			case "A":{n=10;break;}
-			case "B":{n=11;break;}
-			case "C":{n=12;break;}
-			case "D":{n=13;break;}
-			case "E":{n=14;break;}
-			case "F":{n=15;break;}
-			default: n=Integer.parseInt(s);
+			case "A":{return 10;}
+			case "B":{return 11;}
+			case "C":{return 12;}
+			case "D":{return 13;}
+			case "E":{return 14;}
+			case "F":{return 15;}
+			default: 
+			try {
+				if (s != "")
+					return (Integer.parseInt(s));
+			} catch (NumberFormatException e) {
+				HexError=true;
+			}
 		}
-		return n;
+		return 0;
 	}
 	private Boolean IsNum(String Mod,String[] ML) {
 		for(int i=0;i<ML.length;i++){

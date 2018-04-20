@@ -85,7 +85,7 @@ public class Form {
 		Icon.gridy=1;
 		Ins.add(instr,Icon);
 		p1.add(Ins);
-		instr.setText(r.readfilePass(FileName));
+		instr.setText(r.readfilePass(FileName).substring(r.readfilePass(FileName).indexOf("___",r.readfilePass(FileName).indexOf("___")+1)+3));
 		f.add(p1);
 		f.pack();
 		f.setVisible(true);
@@ -96,5 +96,4 @@ public class Form {
 		s=input.getText();
 		return s;
 	}
-	
 }
