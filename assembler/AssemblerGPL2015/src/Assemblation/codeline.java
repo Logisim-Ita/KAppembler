@@ -25,6 +25,7 @@ public class codeline {
 	public String[] RegisterList;
 	public String[] ModifierList;
 	public ArrayList<String> ContainedMod;
+	public Costant Cost=new Costant(0,"01923824");
 	private int i;
 	private int itemp;
 	private OutError er=new OutError();
@@ -37,9 +38,24 @@ public class codeline {
 			if(SemiHumanCode.contains(ML[i])) 
 				ContainedMod.add(ML[i]);
 		}
+		
 		if (SemiHumanCode.contains(";"))
 			SemiHumanCode = SemiHumanCode.substring(0, SemiHumanCode.indexOf(";"));
+		if(SemiHumanCode.contains("Cost")) {
+			SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf("Cost")+5);
+			atemp=SemiHumanCode.split("=");
+			SemiHumanCode="";
+			if(IsNum(atemp[1],ModifierList)) {
+				if(atemp[1].startsWith("0x")) {
+					atemp[1]=atemp[1].replace("0x","");
+					itemp=HexToDecimal(atemp[1]);
+				}else
+					itemp = Integer.parseInt(atemp[1]);
+				Cost=new Costant(itemp,atemp[0]);
+			}
+		}
 		if (!SemiHumanCode.equals("")) {
+			
 			if (!(SemiHumanCode.startsWith(" ") || SemiHumanCode.startsWith("\t"))) {
 				if(SemiHumanCode.contains(":")){
 					label = SemiHumanCode.substring(0, SemiHumanCode.indexOf(":"));
@@ -126,7 +142,7 @@ public class codeline {
 		return val != val;
 	}
 
-	private int GetNumberOfBytes(int Num) {
+	public int GetNumberOfBytes(int Num) {
 		int Bytes;
 		for (Bytes = 1; Num > (Math.pow(2, 8 * Bytes) - 1); Bytes++)
 			;

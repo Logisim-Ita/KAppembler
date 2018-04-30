@@ -12,8 +12,6 @@ public class Read {
 
 		try {
 			fr = new FileReader(FileName);
-			//fr = new FileReader("Z:\\KAppembler-master\\KAppembler\\assembler\\instruction.txt");
-			//fr = new FileReader("C:\\Users\\Samuele Capani\\Desktop\\Assembler\\assembler\\instruction.txt");
 			br = new BufferedReader(fr);
 
 			String sCurrentLine;

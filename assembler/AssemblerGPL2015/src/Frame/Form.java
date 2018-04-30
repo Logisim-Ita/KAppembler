@@ -57,6 +57,7 @@ public class Form {
 		Bcon.insets = new Insets(10, 10, 10, 10);
 		Bcon.gridx = 0;
 		Bcon.gridy = 0;
+		
 		Icon.anchor = GridBagConstraints.NORTH;
 		Icon.insets = new Insets(10, 10, 10, 10);
 		Icon.gridx = 0;

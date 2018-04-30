@@ -2,8 +2,6 @@ package Assemblation;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-
 import Frame.Form;
 import I_O.OutError;
 import I_O.Read;
@@ -22,7 +20,7 @@ public class Elaboration {
 		try {
 			 s = main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
+			er.printError("instruction file is missing", "file missing");
 			e.printStackTrace();
 		}
 		s=s.substring(0,s.lastIndexOf("/"));
@@ -33,16 +31,17 @@ public class Elaboration {
 		ModList= r.linedivision(atemp[1]);
 		String[] linesSet=r.linedivision(atemp[2]);
 		for(int i=1;i<linesSet.length;i++) {
-			//atemp=linesSet[i].split("§");
 			inst.add(new instructions(linesSet[i].substring(0, linesSet[i].indexOf(" ")),linesSet[i].substring(linesSet[i].indexOf(" ")+1),RegList,ModList));
 		}
 	}
+	/**/
 	public String traduction(String input) {
 		ArrayList<codeline> code= new ArrayList<codeline>();
 		String temp="";
 		String trad="";
 		int tempFactorPos = 0;
 		int WordsCounter=0;
+		int tempNB=0;
 		String[] atemp=input.split("\r\n");
 		for(int i=0;i<atemp.length;i++) {
 			code.add(new codeline(atemp[i],RegList,ModList));
@@ -50,6 +49,7 @@ public class Elaboration {
 		for(int i=0;i<code.size();i++){
 			temp=trad;
 			code.get(i).Position=WordsCounter;
+			/*RAM portion occupied*/
 			for(int c=0;c<inst.size();c++) {
 				if(code.get(i).Key.equals(inst.get(c).Key) && code.get(i).ContainedMod.equals(inst.get(c).ContainedMod)) {
 					if(code.get(i).FirstIsNum) {
@@ -57,7 +57,6 @@ public class Elaboration {
 							if(code.get(i).SecondIsNum) {
 								if(code.get(i).SecondNB<=inst.get(c).SecondNB){
 									//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
-									
 									WordsCounter+=1+code.get(i).FirstNB+code.get(i).SecondNB;
 								}
 							}else {
@@ -66,9 +65,10 @@ public class Elaboration {
 									for(int l=0;l<code.size();l++){
 										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 											//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(1,code.get(l).Position);
-											
 											WordsCounter+=2+code.get(i).FirstNB;
 											//isLabel=true;
+										}else if(code.get(i).SecondFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).SecondNB) {
+											WordsCounter+=1+code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())+code.get(i).FirstNB;
 										}
 									}
 									//if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
@@ -86,14 +86,19 @@ public class Elaboration {
 								if(code.get(i).FirstFactor.equals(code.get(l).label)) {
 									isLabel=true;
 									tempFactorPos=code.get(l).Position;
+									tempNB=1;
+								}
+								else if (code.get(i).FirstFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).FirstNB){
+									isLabel=true;
+									tempFactorPos=code.get(l).Cost.getn();
+									tempNB=code.get(l).GetNumberOfBytes(code.get(l).Cost.getn());
 								}
 							}
 							if(isLabel) {
 								if(code.get(i).SecondIsNum) {
 									if(code.get(i).SecondNB<=inst.get(c).SecondNB){
 										//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos)+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
-										
-										WordsCounter+=2+code.get(i).SecondNB;
+										WordsCounter+=1+tempNB+code.get(i).SecondNB;
 									}
 								}else {
 									if(inst.get(c).SecondIsNum){
@@ -102,15 +107,18 @@ public class Elaboration {
 											if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 												//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos)+DeHex(1,code.get(l).Position);
 												
-												WordsCounter+=3;
+												WordsCounter+=2+tempNB;
 												//isLabell=true;
+											}
+											else if(code.get(i).SecondFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).SecondNB) {
+												WordsCounter+=1+tempNB+code.get(l).GetNumberOfBytes(code.get(l).Cost.getn());
 											}
 										}
 										//if(!isLabell)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
 									}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
 										//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos);
 										
-										WordsCounter+=2;
+										WordsCounter+=1+tempNB;
 									}
 								}
 							}
@@ -118,18 +126,18 @@ public class Elaboration {
 							if(code.get(i).SecondIsNum) {
 								if(code.get(i).SecondNB<=inst.get(c).SecondNB){
 									//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
-									
 									WordsCounter+=1+code.get(i).SecondNB;
 								}
 							}else {
 								if(inst.get(c).SecondIsNum){
-									Boolean isLabel=false;
+									//Boolean isLabel=false;
 									for(int l=0;l<code.size();l++){
 										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 											//trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,code.get(l).Position);
-											
-											WordsCounter+=2;
-											isLabel=true;
+											WordsCounter+=3;
+											//isLabel=true;
+										}else if(code.get(i).SecondFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).SecondNB) {
+											WordsCounter+=1+code.get(l).GetNumberOfBytes(code.get(l).Cost.getn());
 										}
 									}
 								}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
@@ -159,6 +167,8 @@ public class Elaboration {
 										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(1,code.get(l).Position);
 											//isLabel=true;
+										}else if(code.get(i).SecondFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).SecondNB) {
+											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(i).FirstNB,code.get(i).FirstN)+DeHex(code.get(l).GetNumberOfBytes(code.get(l).Cost.getn()),code.get(l).Cost.getn());
 										}
 									}
 									//if(!isLabel)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
@@ -174,25 +184,33 @@ public class Elaboration {
 								if(code.get(i).FirstFactor.equals(code.get(l).label)) {
 									isLabel=true;
 									tempFactorPos=code.get(l).Position;
+									tempNB=1;
+								}
+								else if (code.get(i).FirstFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).FirstNB){
+									isLabel=true;
+									tempFactorPos=code.get(l).Cost.getn();
+									tempNB=code.get(l).GetNumberOfBytes(code.get(l).Cost.getn());
 								}
 							}
-							if(isLabel) {
+							if(isLabel){
 								if(code.get(i).SecondIsNum) {
 									if(code.get(i).SecondNB<=inst.get(c).SecondNB){
-										trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos)+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
+										trad+=inst.get(c).MachineCode+"\r\n"+DeHex(tempNB,tempFactorPos)+DeHex(code.get(i).SecondNB,code.get(i).SecondN);
 									}
 								}else {
 									if(inst.get(c).SecondIsNum){
 										//Boolean isLabell=false;
 										for(int l=0;l<code.size();l++){
 											if(code.get(i).SecondFactor.equals(code.get(l).label)) {
-												trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos)+DeHex(1,code.get(l).Position);
+												trad+=inst.get(c).MachineCode+"\r\n"+DeHex(tempNB,tempFactorPos)+DeHex(1,code.get(l).Position);
 												//isLabell=true;
+											}else if(code.get(i).SecondFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).SecondNB) {
+												trad+=inst.get(c).MachineCode+"\r\n"+DeHex(tempNB,tempFactorPos)+DeHex(code.get(l).GetNumberOfBytes(code.get(l).Cost.getn()),code.get(l).Cost.getn());
 											}
 										}
 										//if(!isLabell)infoBox("You digited "+code.get(i).SecondFactor+" instead of a number","Attention please");
 									}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
-										trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,tempFactorPos);
+										trad+=inst.get(c).MachineCode+"\r\n"+DeHex(tempNB,tempFactorPos);
 									}
 								}
 							}
@@ -203,11 +221,13 @@ public class Elaboration {
 								}
 							}else {
 								if(inst.get(c).SecondIsNum){
-									Boolean isLabel=false;
+									//Boolean isLabel=false;
 									for(int l=0;l<code.size();l++){
 										if(code.get(i).SecondFactor.equals(code.get(l).label)) {
 											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(1,code.get(l).Position);
-											isLabel=true;
+											//isLabel=true;
+										}else if(code.get(i).SecondFactor.equals(code.get(l).Cost.gets())&&code.get(i).GetNumberOfBytes(code.get(l).Cost.getn())<=inst.get(c).SecondNB) {
+											trad+=inst.get(c).MachineCode+"\r\n"+DeHex(code.get(l).GetNumberOfBytes(code.get(l).Cost.getn()),code.get(l).Cost.getn());
 										}
 									}
 								}else if(code.get(i).SecondFactor.equals(inst.get(c).SecondFactor)){
@@ -228,20 +248,14 @@ public class Elaboration {
 	private String DeHex(int NB,int num){
 		String ByS=Integer.toHexString(num);
 		String res="";
+		while(ByS.length()/2<=NB){
+			ByS="0"+ByS;
+		}
 		for(int i=0;i<NB;i++) {
-			if(ByS.length()-2>=0) {
-				res+=ByS.substring(ByS.length()-2);
+				res+=ByS.substring(ByS.length()-2)+"\r\n";;
 				ByS=ByS.substring(0,ByS.length()-2);
-			}
-			else {
-				for(int c=0;c<(2-ByS.length());c++) {
-					res+=0;
-				}
-				res+=ByS.substring(0);
-			}
 		}
 		res=res.toUpperCase();
-		res+="\r\n";
 		return res;
 	}
 	

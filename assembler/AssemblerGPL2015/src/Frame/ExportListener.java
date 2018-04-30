@@ -53,7 +53,6 @@ public class ExportListener implements ActionListener{
 	public void writeFile(File dest,String text,String est) throws IOException{
 		    FileWriter fileWriter = new FileWriter(dest+est);
 		    PrintWriter printWriter = new PrintWriter(fileWriter);
-		    //printWriter.print("Some String");
 		    printWriter.printf(text);
 		    printWriter.close();
 		
