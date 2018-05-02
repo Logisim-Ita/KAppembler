@@ -25,48 +25,49 @@ public class codeline {
 	public String[] RegisterList;
 	public String[] ModifierList;
 	public ArrayList<String> ContainedMod;
-	public Costant Cost=new Costant(0,"01923824");
+	public Costant Cost = new Costant(0, "01923824");
 	private int i;
 	private int itemp;
-	private OutError er=new OutError();
-	public codeline(String SHC, String[] RL,String[] ML) {
+	private OutError er = new OutError();
+
+	public codeline(String SHC, String[] RL, String[] ML) {
 		SemiHumanCode = SHC;
 		RegisterList = RL;
-		ModifierList=ML;
-		ContainedMod=new ArrayList<String>();
-		for(i=0;i<ML.length;i++) {
-			if(SemiHumanCode.contains(ML[i])) 
+		ModifierList = ML;
+		ContainedMod = new ArrayList<String>();
+		for (i = 0; i < ML.length; i++) {
+			if (SemiHumanCode.contains(ML[i]))
 				ContainedMod.add(ML[i]);
 		}
-		
+
 		if (SemiHumanCode.contains(";"))
 			SemiHumanCode = SemiHumanCode.substring(0, SemiHumanCode.indexOf(";"));
-		if(SemiHumanCode.contains("Cost")) {
-			SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf("Cost")+5);
-			atemp=SemiHumanCode.split("=");
-			SemiHumanCode="";
-			if(IsNum(atemp[1],ModifierList)) {
-				if(atemp[1].startsWith("0x")) {
-					atemp[1]=atemp[1].replace("0x","");
-					itemp=HexToDecimal(atemp[1]);
-				}else
+		if (SemiHumanCode.contains("Cost")) {
+			SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf("Cost") + 5);
+			atemp = SemiHumanCode.split("=");
+			SemiHumanCode = "";
+			if (IsNum(atemp[1], ModifierList)) {
+				if (atemp[1].startsWith("0x")) {
+					atemp[1] = atemp[1].replace("0x", "");
+					itemp = HexToDecimal(atemp[1]);
+				} else
 					itemp = Integer.parseInt(atemp[1]);
-				Cost=new Costant(itemp,atemp[0]);
+				Cost = new Costant(itemp, atemp[0]);
 			}
 		}
 		if (!SemiHumanCode.equals("")) {
-			
+
 			if (!(SemiHumanCode.startsWith(" ") || SemiHumanCode.startsWith("\t"))) {
-				if(SemiHumanCode.contains(":")){
+				if (SemiHumanCode.contains(":")) {
 					label = SemiHumanCode.substring(0, SemiHumanCode.indexOf(":"));
 					SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf(":") + 1);
-				}else {
+				} else {
 					er.printError("unvalid label in label position", "Label error");
 				}
 			}
-			SemiHumanCode=StringCleaning(SemiHumanCode);
+			SemiHumanCode = StringCleaning(SemiHumanCode);
 			if (SemiHumanCode.contains(" ")) {
-				Key = SemiHumanCode.substring(0,SemiHumanCode.indexOf(" "));
+				Key = SemiHumanCode.substring(0, SemiHumanCode.indexOf(" "));
 				temp = SemiHumanCode.substring(SemiHumanCode.indexOf(" "));
 			} else {
 				Key = SemiHumanCode;
@@ -78,41 +79,41 @@ public class codeline {
 			} else {
 				FirstFactor = temp;
 			}
-			FirstFactor=StringCleaning(FirstFactor);
-			SecondFactor=StringCleaning(SecondFactor);
+			FirstFactor = StringCleaning(FirstFactor);
+			SecondFactor = StringCleaning(SecondFactor);
 			FirstModifier = GetModifier(FirstFactor, RegisterList);
 			SecondModifier = GetModifier(SecondFactor, RegisterList);
-			FirstIsNum = IsNum(FirstModifier,ModifierList);
-			SecondIsNum = IsNum(SecondModifier,ModifierList);
+			FirstIsNum = IsNum(FirstModifier, ModifierList);
+			SecondIsNum = IsNum(SecondModifier, ModifierList);
 			if (FirstIsNum) {
-				for(int i=0;i<ML.length;i++){
-					if(FirstModifier.contains(ML[i])){
-						FirstModifier=FirstModifier.replace(ML[i],"");
+				for (int i = 0; i < ML.length; i++) {
+					if (FirstModifier.contains(ML[i])) {
+						FirstModifier = FirstModifier.replace(ML[i], "");
 					}
 				}
-				if(FirstModifier.startsWith("0x")) {
-					FirstModifier=FirstModifier.replace("0x","");
-					FirstN=HexToDecimal(FirstModifier);
-				}else
+				if (FirstModifier.startsWith("0x")) {
+					FirstModifier = FirstModifier.replace("0x", "");
+					FirstN = HexToDecimal(FirstModifier);
+				} else
 					FirstN = Integer.parseInt(FirstModifier);
 				FirstNB = GetNumberOfBytes(FirstN);
 			}
 			if (SecondIsNum) {
-				for(int i=0;i<ML.length;i++){
-					if(SecondModifier.contains(ML[i])){
-						SecondModifier=SecondModifier.replace(ML[i],"");
+				for (int i = 0; i < ML.length; i++) {
+					if (SecondModifier.contains(ML[i])) {
+						SecondModifier = SecondModifier.replace(ML[i], "");
 					}
 				}
-				if(SecondModifier.startsWith("0x")) {
-					SecondModifier=SecondModifier.replace("0x","");
-					SecondN=HexToDecimal(SecondModifier);
-				}else
+				if (SecondModifier.startsWith("0x")) {
+					SecondModifier = SecondModifier.replace("0x", "");
+					SecondN = HexToDecimal(SecondModifier);
+				} else
 					SecondN = Integer.parseInt(SecondModifier);
 				SecondNB = GetNumberOfBytes(SecondN);
 			}
-			
+
 		}
-		if(HexError) {
+		if (HexError) {
 			er.printError("unvalid Hex number insered, please check your code", "Hex error");
 		}
 		// System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+"
@@ -120,7 +121,8 @@ public class codeline {
 	}
 
 	private String GetModifier(String Factor, String[] Reg) {
-		if(Factor.contains("0x"))return Factor;
+		if (Factor.contains("0x"))
+			return Factor;
 		itemp = 0;
 		for (i = 0; i < Reg.length; i++) {
 			if (Factor == Reg[i]) {
@@ -148,46 +150,61 @@ public class codeline {
 			;
 		return Bytes;
 	}
+
 	private int HexToDecimal(String s) {
-		int n=0;
-		int e=0;
-		while(s.length()!=0) {
-			n+=Dec(s.substring(s.length()-1))*Math.pow(16, e);
+		int n = 0;
+		int e = 0;
+		while (s.length() != 0) {
+			n += Dec(s.substring(s.length() - 1)) * Math.pow(16, e);
 			e++;
-			s=s.substring(0,s.length()-1);
+			s = s.substring(0, s.length() - 1);
 		}
 		return n;
 	}
+
 	private int Dec(String s) {
-		s=s.toUpperCase();
-		switch(s) {
-			case "A":{return 10;}
-			case "B":{return 11;}
-			case "C":{return 12;}
-			case "D":{return 13;}
-			case "E":{return 14;}
-			case "F":{return 15;}
-			default: 
+		s = s.toUpperCase();
+		switch (s) {
+		case "A": {
+			return 10;
+		}
+		case "B": {
+			return 11;
+		}
+		case "C": {
+			return 12;
+		}
+		case "D": {
+			return 13;
+		}
+		case "E": {
+			return 14;
+		}
+		case "F": {
+			return 15;
+		}
+		default:
 			try {
 				if (s != "")
 					return (Integer.parseInt(s));
 			} catch (NumberFormatException e) {
-				HexError=true;
+				HexError = true;
 			}
 		}
 		return 0;
 	}
-	private Boolean IsNum(String Mod,String[] ML) {
-		for(int i=0;i<ML.length;i++){
-			if(Mod.contains(ML[i])){
-				Mod=Mod.replace(ML[i],"");
+
+	private Boolean IsNum(String Mod, String[] ML) {
+		for (int i = 0; i < ML.length; i++) {
+			if (Mod.contains(ML[i])) {
+				Mod = Mod.replace(ML[i], "");
 			}
 		}
-		if(Mod.startsWith("0x")) {
-			Mod=Mod.replace("0x","");
-			Mod=Integer.toString(HexToDecimal(Mod));
+		if (Mod.startsWith("0x")) {
+			Mod = Mod.replace("0x", "");
+			Mod = Integer.toString(HexToDecimal(Mod));
 		}
-		
+
 		try {
 			if (Mod != "")
 				return !IsNaN(Integer.parseInt(Mod));
@@ -197,6 +214,7 @@ public class codeline {
 			return false;
 		}
 	}
+
 	private String StringCleaning(String toClean) {
 		while (toClean.startsWith(" ") || toClean.startsWith("\t")) {
 			toClean = toClean.substring(1);

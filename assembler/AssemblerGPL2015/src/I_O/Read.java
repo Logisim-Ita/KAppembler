@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 public class Read {
 	public void readfile(String FileName) {
 		BufferedReader br = null;
@@ -42,20 +41,21 @@ public class Read {
 
 		}
 	}
+
 	public String readfilePass(String Filename) {
 		BufferedReader br = null;
 		FileReader fr = null;
-		String s="";
+		String s = "";
 		try {
 
-			//br = new BufferedReader(new FileReader(FILENAME));
+			// br = new BufferedReader(new FileReader(FILENAME));
 			fr = new FileReader(Filename);
 			br = new BufferedReader(fr);
 
 			String sCurrentLine;
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				s=s+sCurrentLine+"\r\n";
+				s = s + sCurrentLine + "\n";
 			}
 
 		} catch (IOException e) {
@@ -81,10 +81,11 @@ public class Read {
 		}
 		return s;
 	}
+
 	public String[] linedivision(String text) {
 		String[] lines = null;
-		if(text!=null)
-		lines=text.split("\r\n");
-		return lines; 
+		if (text != null)
+			lines = text.split("\n");
+		return lines;
 	}
 }
