@@ -1,6 +1,8 @@
 package Frame;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.Border;
 
 import I_O.Read;
 
@@ -35,23 +38,27 @@ public class Form {
 	JButton save = new JButton("Save Assembly");
 	JButton imp = new JButton("Import Assembly");
 	Listeners listener = new Listeners(input, output);
-	Label in = new Label("instructions:");
+	Label in = new Label("INSTRUCTIONS");
 	ExportListener el = new ExportListener(output, 0);
 	ExportListener sl = new ExportListener(input, 1);
 	importListener il = new importListener(input);
 	BorderLayout b = new BorderLayout();
 	GridBagLayout g = new GridBagLayout();
-
+	private final Color CBackground=new Color(40,40,40);
+	private final Color CText=new Color(255,127,56);
 	public void visualizza(String FileName) {
 		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		f.setLayout(g);
 		f.setResizable(false);
 		output.setFocusable(false);
-
 		JPanel p1 = new JPanel();
 		JPanel IO = new JPanel();
 		JPanel Buttons = new JPanel();
 		JPanel Ins = new JPanel();
+		p1.setBackground(CBackground);
+		IO.setBackground(CBackground);
+		Buttons.setBackground(CBackground);
+		Ins.setBackground(CBackground);
 		IO.setLayout(g);
 		Buttons.setLayout(g);
 		Ins.setLayout(g);
@@ -72,18 +79,43 @@ public class Form {
 		Icon.gridy = 0;
 		inputScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		inputScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		instrScroll.getVerticalScrollBar().setBackground(CBackground);
 		input.setText("\tLD A,B");
+		input.setBackground(CBackground.darker());
+		output.setBackground(CBackground.darker());
+		instr.setBackground(CBackground.darker());
+		input.setForeground(CText);
+		output.setForeground(CText);
+		instr.setForeground(CText);
 		output.setEditable(false);
 		instr.setEditable(false);
 		submit.addActionListener(listener);
 		export.addActionListener(el);
 		save.addActionListener(sl);
 		imp.addActionListener(il);
-		IO.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "I/O Panel"));
+		Border b=BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "I/O Panel", 2, 0, new Font(null), CText);
+		IO.setBorder(b);
 		IO.add(inputScroll, constraints);
 		constraints.gridy = 10;
 		IO.add(outputScroll, constraints);
 		p1.add(IO);
+		submit.setForeground(CText);
+		submit.setBackground(CBackground.darker());
+		submit.setContentAreaFilled(false);
+		submit.setOpaque(true);
+		export.setForeground(CText);
+		export.setBackground(CBackground.darker());
+		export.setContentAreaFilled(false);
+		export.setOpaque(true);
+		save.setForeground(CText);
+		save.setBackground(CBackground.darker());
+		save.setContentAreaFilled(false);
+		save.setOpaque(true);
+		imp.setForeground(CText);
+		imp.setBackground(CBackground.darker());
+		imp.setContentAreaFilled(false);
+		imp.setOpaque(true);
+		in.setForeground(CText);
 		Buttons.add(submit, Bcon);
 		Bcon.gridy = 1;
 		Buttons.add(export, Bcon);
@@ -96,8 +128,7 @@ public class Form {
 		Icon.gridy = 1;
 		Ins.add(instrScroll, Icon);
 		p1.add(Ins);
-		instr.setText(r.readfilePass(FileName)
-				.substring(r.readfilePass(FileName).indexOf("___", r.readfilePass(FileName).indexOf("___") + 1) + 3));
+		instr.setText(r.readfilePass(FileName).substring(r.readfilePass(FileName).indexOf("___", r.readfilePass(FileName).indexOf("___") + 1) + 3));
 		f.add(p1);
 		f.pack();
 		f.setVisible(true);
