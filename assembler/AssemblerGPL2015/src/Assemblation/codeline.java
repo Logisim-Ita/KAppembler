@@ -2,6 +2,7 @@ package Assemblation;
 
 import java.util.ArrayList;
 
+import Frame.Form;
 import I_O.OutError;
 
 public class codeline {
@@ -11,7 +12,7 @@ public class codeline {
 	public String SecondFactor = "";
 	public String FirstModifier = "";
 	public String SecondModifier = "";
-	public String label = "";
+	public String label = null;
 	public boolean FirstIsNum;
 	public boolean SecondIsNum;
 	public boolean HexError;
@@ -62,7 +63,7 @@ public class codeline {
 					label = SemiHumanCode.substring(0, SemiHumanCode.indexOf(":"));
 					SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf(":") + 1);
 				} else {
-					er.printError("unvalid label in label position", "Label error");
+					er.printError("unvalid label in label position");
 				}
 			}
 			SemiHumanCode = StringCleaning(SemiHumanCode);
@@ -75,7 +76,8 @@ public class codeline {
 			if (temp != "" && temp.contains(",")) {
 				atemp = temp.split(",");
 				FirstFactor = atemp[0];
-				SecondFactor = atemp[1];
+				if(atemp.length>1)
+					SecondFactor = atemp[1];
 			} else {
 				FirstFactor = temp;
 			}
@@ -114,7 +116,7 @@ public class codeline {
 
 		}
 		if (HexError) {
-			er.printError("unvalid Hex number insered, please check your code", "Hex error");
+			er.printError("unvalid Hex number insered, please check your code");
 		}
 		// System.out.println(Key+" "+FirstIsNum+" "+SecondIsNum+" "+FirstN+"
 		// "+FirstNB+" "+SecondN);

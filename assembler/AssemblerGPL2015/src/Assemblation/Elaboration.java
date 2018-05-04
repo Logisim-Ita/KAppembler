@@ -22,7 +22,7 @@ public class Elaboration {
 		try {
 			s = main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		} catch (URISyntaxException e) {
-			er.printError("instruction file is missing", "file missing");
+			er.printError("instruction file is missing");
 			e.printStackTrace();
 		}
 		s = s.substring(0, s.lastIndexOf("/"));
@@ -277,8 +277,7 @@ public class Elaboration {
 				}
 			}
 			if (temp.equals(trad) && !code.get(i).Key.equals("")) {
-				er.printError("No instuction found for line " + (i + 1) + " please check your code",
-						"Attention please");
+				er.printError("No instuction found for line " + (i + 1) + " please check your code");
 			}
 		}
 		return trad;
