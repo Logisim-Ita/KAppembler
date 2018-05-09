@@ -11,7 +11,7 @@ import Frame.Form;
 import I_O.Read;
 
 public class main {
-	public static String Serrors="TEST";
+	public static String Serrors="";
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -7,7 +7,6 @@ import Main.main;
 
 public class OutError {
 	public void printError(String errMessage) {
-		//JOptionPane.showMessageDialog(null, errMessage, "ErrorBox: " + titleBar, JOptionPane.ERROR_MESSAGE);
-		main.Serrors+="\n"+errMessage;
+		main.Serrors+=errMessage+"\n";
 	}
 }

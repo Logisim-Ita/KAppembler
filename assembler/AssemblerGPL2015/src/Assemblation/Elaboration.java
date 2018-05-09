@@ -40,6 +40,7 @@ public class Elaboration {
 
 	/**/
 	public String traduction(String input) {
+		er.printError("_______________________________");
 		ArrayList<codeline> code = new ArrayList<codeline>();
 		String temp = "";
 		String trad = "";
@@ -280,6 +281,7 @@ public class Elaboration {
 				er.printError("No instuction found for line " + (i + 1) + " please check your code");
 			}
 		}
+		er.printError("compilation finished");
 		return trad;
 	}
 
