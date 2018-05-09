@@ -38,7 +38,7 @@ public class Form {
 	JScrollPane outputScroll = new JScrollPane(output);
 	JScrollPane errorScroll = new JScrollPane(errors);
 	JButton submit = new JButton("Assembla");
-	JButton export = new JButton("Esporta per Ram");
+	JButton export = new JButton("Esporta per ROM Logisim");
 	JButton save = new JButton("Salva Assembly");
 	JButton imp = new JButton("Importa Assembly");
 	Listeners listener = new Listeners(input, output,errors);

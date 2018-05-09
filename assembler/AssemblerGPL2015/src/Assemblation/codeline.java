@@ -36,13 +36,14 @@ public class codeline {
 		RegisterList = RL;
 		ModifierList = ML;
 		ContainedMod = new ArrayList<String>();
+		if (SemiHumanCode.contains(";"))
+			SemiHumanCode = SemiHumanCode.substring(0, SemiHumanCode.indexOf(";"));
 		for (i = 0; i < ML.length; i++) {
 			if (SemiHumanCode.contains(ML[i]))
 				ContainedMod.add(ML[i]);
 		}
 
-		if (SemiHumanCode.contains(";"))
-			SemiHumanCode = SemiHumanCode.substring(0, SemiHumanCode.indexOf(";"));
+		
 		if (SemiHumanCode.contains("Cost")) {
 			SemiHumanCode = SemiHumanCode.substring(SemiHumanCode.indexOf("Cost") + 5);
 			atemp = SemiHumanCode.split("=");
