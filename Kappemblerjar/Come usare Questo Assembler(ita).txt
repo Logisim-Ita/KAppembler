@@ -1,0 +1,72 @@
+Buongiorno a tutti,
+Questa è una guida con varie intruzioni per utilizzare KAppembler
+Intanto eseguite "Assembler.jar"
+potete notare tre aree di testo e 4 bottoni
+l'area di testo in alto, l'unica modificabile, è l'area 
+in cui scriverete in vostro Assembly
+	Importante: usate Tab o Spazio prima di inserire un'istruzione
+	Se invece volete usare un'etichetta ricordatevi di NON lasciare alcun
+	spazio ad esempio:
+	
+	LD A,B
+	ADD 1
+Ciclo:  LD B,A
+	JP Ciclo
+
+
+La seconda area è invece quella di Output che servirà solo per 
+visualizzare il MACHINECODE.
+La terza area contiene tutte le istruzoni 
+(Importate direttamente dal file instruction.txt)
+	Importante: n1 significa un numero che può essere contenuto in un byte
+	quindi max 255, n2(attualmente assente dalle instruction) è un numero a 2Byte
+
+Ora analizziamo i pulsanti: 
+Submit è il tasto che esegue la traduzione dell'Assembly. 
+Export crea un file .b18 contenente il codice Macchina 
+	pronto ad essere montato su una ROM di Logisim.
+Save Assembly: Salva il codice che avete scritto su un file .asm
+Import Assembly: Carica un codice da un file .asm
+
+Come modificare il file instruction.txt (tenere invariata la locazione e il nome):
+IL file instruction.txt è composto da tre parti separate da tre trattini bassi in questo modo
+
+Registri
+___
+Modificatori
+___
+Istruzioni
+
+La parte dei registri deve essere compilata con il nome dei registri e da 
+tutti gli accoppiamenti possibili previsti dalla vostra CPU ad esempio:
+A
+B 
+AB
+
+In questo modo l'assemblatore riconoscerà che A B e AB sono registri
+
+La parte dei modificatori va' compilata con tutti i possibili caratteri 
+che vanno a differenziare un istruzione da un'altra, ad esempio:
+OUT (0),A
+ADD 3
+nella prima istruzione possiamo vedere due modificatori: "(" e ")" infatti se sono previsti
+modificatori nel vostro assembly andranno segnalati nella zona apposita.
+nel caso non ce ne siano bisogna comunque scrivere i tre trattini bassi in questo modo
+
+A
+B
+___
+___
+Istruzioni
+
+Ora passiamo alla parte più importante, la formattazione delle istruzioni:
+CodiceOperativo Istruzione PrimoOperatore,SecondoOperatore
+ad esempio:
+
+00 NOP
+04 INC B
+06 LD B,n1
+
+possiamo vedere tre istruzioni differenti la prima non ha operatori, la seconda ne ha uno,
+la terza ne ha due; infatti non he necessario avere sempre degli operatori, l'unica parte 
+necessaria è avere almeno Codice operativo e istruzione
