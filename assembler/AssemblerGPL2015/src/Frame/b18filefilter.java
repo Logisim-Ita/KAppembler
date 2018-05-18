@@ -13,6 +13,6 @@ public class b18filefilter extends FileFilter {
 	}
 
 	public String getDescription() {
-		return "File Linguaggio Macchina";
+		return "File Linguaggio Macchina(.b18)";
 	}
 }

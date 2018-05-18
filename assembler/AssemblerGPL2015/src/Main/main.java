@@ -12,6 +12,7 @@ import I_O.Read;
 
 public class main {
 	public static String Serrors="";
+	public static String path;
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -20,14 +21,14 @@ public class main {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		String s = "";
+		 path = "";
 		try {
-			s = main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+			path = main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		s = s.substring(0, s.lastIndexOf("/"));
-		String FileName = s + "/instruction.txt";
+		path = path.substring(0, path.lastIndexOf("/"));
+		String FileName = path + "/instruction.txt";
 		System.out.println(FileName);
 		Form obj = new Form();
 		Read r = new Read();

@@ -14,6 +14,6 @@ class asmfilefilter extends FileFilter {
 	}
 
 	public String getDescription() {
-		return "File assembly";
+		return "File assembly('.asm')";
 	}
 }

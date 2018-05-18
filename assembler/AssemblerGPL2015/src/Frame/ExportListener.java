@@ -6,15 +6,33 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import Main.main;
+
 public class ExportListener implements ActionListener {
 	private JTextArea output;
 	private int cas;
+	private Preferences prefs = Preferences.userNodeForPackage(Frame.ExportListener.class);
+	//-------------------test-----------------
+	private void setPathPref(String mod) {
+	// Preference key name
+	final String PREF_NAME = "exportdir";
 
+	// Set the value of the preference
+	String newValue = mod;
+	prefs.put(PREF_NAME,newValue);
+	
+	// Get the value of the preference;
+	// default value is returned if the preference does not exist
+	String defaultValue = main.path;
+	String propertyValue = prefs.get(PREF_NAME, defaultValue);
+	}
+	//---------------------------------------
 	public ExportListener(JTextArea output2, int cas) {
 		this.output = output2;
 		this.cas = cas;
@@ -35,7 +53,7 @@ public class ExportListener implements ActionListener {
 	public void saveFile(String text, String est) {
 		// parent component of the dialog
 		JFrame parentFrame = new JFrame("Savefile");
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser = new JFileChooser(prefs.get("exportdir", main.path));
 		fileChooser.setDialogTitle("Saving");
 		if (est.equals(".asm")) {
 			fileChooser.setFileFilter(new asmfilefilter());
@@ -45,7 +63,10 @@ public class ExportListener implements ActionListener {
 		int userSelection = fileChooser.showSaveDialog(parentFrame);
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 			File fileToSave = fileChooser.getSelectedFile();
-			System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+			String path=fileToSave.getParent();
+			
+			//System.out.println("Save as file: " + path);
+			setPathPref(path);
 			try {
 				writeFile(fileToSave, text, est);
 			} catch (IOException e) {
