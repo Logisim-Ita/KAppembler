@@ -16,11 +16,13 @@ public class codeline {
 	public boolean FirstIsNum;
 	public boolean SecondIsNum;
 	public boolean HexError;
+	public boolean isORG;
 	public int SecondNB;
 	public int FirstNB;
 	public int SecondN;
 	public int FirstN;
 	public int Position;
+	public int ORG;
 	private String[] atemp;
 	private String temp = "";
 	public String[] RegisterList;
@@ -55,6 +57,17 @@ public class codeline {
 				} else
 					itemp = Integer.parseInt(atemp[1]);
 				Cost = new Costant(itemp, atemp[0]);
+			}
+		}
+		if (SemiHumanCode.contains("ORG")) {
+			isORG=true;
+			String sORG = SemiHumanCode.substring(SemiHumanCode.indexOf("ORG")+4);
+			if (IsNum(sORG, ModifierList)) {
+				if (sORG.startsWith("0x")) {
+					sORG = sORG.replace("0x", "");
+					ORG = HexToDecimal(sORG);
+				} else
+					ORG = Integer.parseInt(sORG);
 			}
 		}
 		if (!SemiHumanCode.equals("")) {

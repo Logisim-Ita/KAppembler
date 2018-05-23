@@ -54,7 +54,9 @@ public class Elaboration {
 		for (int i = 0; i < code.size(); i++) {
 			temp = trad;
 			code.get(i).Position = WordsCounter;
+			if(code.get(i).isORG) WordsCounter+=code.get(i).ORG;
 			/* RAM portion occupied */
+			else {
 			for (int c = 0; c < inst.size(); c++) {
 				if (code.get(i).Key.equals(inst.get(c).Key)
 						&& code.get(i).ContainedMod.equals(inst.get(c).ContainedMod)) {
@@ -164,9 +166,14 @@ public class Elaboration {
 					}
 				}
 			}
+			}
 		}
 		for (int i = 0; i < code.size(); i++) {
 			temp = trad;
+			if(code.get(i).isORG )
+			for(int k=0;k<(code.get(i).ORG-code.get(i).Position-1);k++) {
+				trad+="00\n";
+			}else {
 			for (int c = 0; c < inst.size(); c++) {
 				if (code.get(i).Key.equals(inst.get(c).Key)
 						&& code.get(i).ContainedMod.equals(inst.get(c).ContainedMod)) {
@@ -280,6 +287,7 @@ public class Elaboration {
 			if (temp.equals(trad) && !code.get(i).Key.equals("")) {
 				er.printError("No instuction found for line " + (i + 1) + " please check your code");
 			}
+		}
 		}
 		er.printError("compilation finished");
 		return trad;
