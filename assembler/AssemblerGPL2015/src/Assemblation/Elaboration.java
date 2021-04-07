@@ -1,5 +1,6 @@
 package Assemblation;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class Elaboration {
 			e.printStackTrace();
 		}
 		s = s.substring(0, s.lastIndexOf("/"));
-		String FileName = s + "\\instruction.txt";
+		String FileName = s + File.separator +"instruction.txt";
 		String instructionSet = r.readfilePass(FileName);
 		String[] atemp = instructionSet.split("___");
 		RegList = r.linedivision(atemp[0]);
@@ -149,7 +150,7 @@ public class Elaboration {
 									for (int l = 0; l < code.size(); l++) {
 										if (code.get(i).SecondFactor.equals(code.get(l).label)) {
 											// trad+=inst.get(c).MachineCode+"\n"+DeHex(1,code.get(l).Position);
-											WordsCounter += 3;
+											WordsCounter += 2;
 											// isLabel=true;
 										} else if (code.get(i).SecondFactor.equals(code.get(l).Cost.gets())
 												&& code.get(i).GetNumberOfBytes(
