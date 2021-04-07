@@ -16,6 +16,8 @@ ___
 14 INC D
 15 DEC D
 16 LD D,n1
+3A LD A,(n1)
+32 LD (n1),A 
 3C INC A
 3D DEC A
 3E LD A,n1
@@ -38,6 +40,9 @@ ___
 90 SUB B
 91 SUB C
 92 SUB D
+B8 CP B
+B9 CP C
+BA CP D
 C2 JP NZ,n1
 C3 JP n1
 C6 ADD n1
