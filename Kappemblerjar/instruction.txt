@@ -16,6 +16,8 @@ ___
 14 INC D
 15 DEC D
 16 LD D,n1
+3A LD A,(n1)
+32 LD (n1),A 
 3C INC A
 3D DEC A
 3E LD A,n1
@@ -32,12 +34,16 @@ ___
 78 LD A,B
 79 LD A,C
 7A LD A,D
+7E LD A,(C)
 80 ADD B
 81 ADD C
 82 ADD D
 90 SUB B
 91 SUB C
 92 SUB D
+B8 CP B
+B9 CP C
+BA CP D
 C2 JP NZ,n1
 C3 JP n1
 C6 ADD n1
@@ -46,9 +52,13 @@ D3 OUT (n1),A
 D6 SUB n1
 DB IN A,(n1)
 E6 AND n1
+ED IN A,(C)
 EE XOR n1
 F2 JP P,n1
 F6 OR n1
 FA JP M,n1
+FD OUT (C),A
 FE CP n1
+
+
 ___
